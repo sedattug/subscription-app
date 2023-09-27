@@ -63,6 +63,12 @@ Please run: `php artisan schedule:list`
 
 For show schedule next run time, look at: `php artisan schedule:list`
 
-## Postman Document
+## Api Documents
 
-Please visit [Subscription Api Postman Document](https://documenter.getpostman.com/view/3979201/2s9YJZ2iqB)
+Postman Api Document: [Subscription Api Postman Document](https://documenter.getpostman.com/view/3979201/2s9YJZ345u)
+
+Postman Collection: [Json File](https://api.postman.com/collections/3979201-ed2d8eff-d0e7-4aaf-b5dc-ce63ce3109d8?access_key=PMAT-01HBBB5BFJS108QCVGHQPXZ3AY)
+
+Installation: [How to Run](https://github.com/sedattug/subscription-app#how-to-run)
+
+ 
