@@ -1,66 +1,68 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Subscription API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This application handles subscription management of users (CRUD).Subscriptions of users whose subscriptions have expired are automatically renewed with scheduled tasks.Payments are always assumed to be successful.
 
-## About Laravel
+## Component Versions
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Laravel `v10.24.0`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+PHP `v8.2.10`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Postgresql `v10.5`
 
-## Learning Laravel
+## How to Run
+- Clone project 
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+git clone https://github.com/sedattug/subscription-app.git
+```
+- Go to project directory
+- Create `.env` file and copy `.env.example` file to `.env` file
+- Configure your database settings in `.env` file
+- Create a database named **subscription_app**
+- Install composer packages  `composer install`
+- Migrate the database `php artisan migrate:refresh`
+- Start the application `php artisan serve`
+- Open browser and check address: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+## Available Endpoints
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- Store a User: **POST** `/api/v1/register`
+- Store a Subscription: **POST** `/api/v1/user/{id}/subscription`
+- Update a Subscription: **PUT** `/api/v1/user/{id}/subscription/{subscription}`
+- Delete a Subscription: **DELETE** `/api/v1/user/{id}/subscription/{subscription}`
+- Store a Transaction: **POST** `/api/v1/user/{id}/transaction`
+- Retrieve a User: **GET** `/api/v1/user/{id}`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Available Commands
 
-## Laravel Sponsors
+### Renew a Subscription
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### `renew:subscription`
 
-### Premium Partners
+It takes 3 parameters. `<user_id:required> <subscription_id:required> <price:optional, default=250>`, it creates payment transaction and updates related subscription's expire date to a month later with given parameters.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+For more information, look at: `php artisan renew:subscription -help`
 
-## Contributing
+### Check all Subscriptions
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### `check:subscriptions`
 
-## Code of Conduct
+This command takes just a parameter. `<price:optional, default=250>`, If exists subscriptions which **today** expired , it renews by default price. For change price, add price parameter to command.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+For more information, look at: `php artisan check:subscriptions -help`
 
-## Security Vulnerabilities
+## Available Jobs
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Renew all Subscriptions
 
-## License
+This job **runs daily** at Y-m-d 00:00. It runs `check:subscriptions` command.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+It pays users whose subscriptions will **expire today** by the **default price** or the **given price** and renew their subscription by **one month**.
+
+Please run: `php artisan schedule:list`
+
+For show schedule next run time, look at: `php artisan schedule:list`
+
+## Postman Document
+
+Please visit [Subscription Api Postman Document](https://documenter.getpostman.com/view/3979201/2s9YJZ2iqB)
