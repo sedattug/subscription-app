@@ -59,7 +59,7 @@ This job **runs daily** at Y-m-d 00:00. It runs `check:subscriptions` command.
 
 It pays users whose subscriptions will **expire today** by the **default price** or the **given price** and renew their subscription by **one month**.
 
-Please run: `php artisan schedule:list`
+Please run: `php artisan schedule:run`
 
 For show schedule next run time, look at: `php artisan schedule:list`
 
