@@ -63,6 +63,18 @@ Please run: `php artisan schedule:run`
 
 For show schedule next run time, look at: `php artisan schedule:list`
 
+## Available Tests
+
+### Successful Registration
+
+### Successful Subscription
+
+Edit **DB_CONNECTION** and **DB_DATABASE** env variable on your **phpunit.xml** file.
+
+Please run: `php artisan test` and see:
+
+![Alt text](/public/images/unit-test-1.png "Unit-Test-1")
+
 ## Api Documents
 
 Postman Api Document: [Subscription Api Postman Document](https://documenter.getpostman.com/view/3979201/2s9YJZ345u)
