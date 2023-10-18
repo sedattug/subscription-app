@@ -43,6 +43,8 @@ It takes 3 parameters. `<user_id:required> <subscription_id:required> <price:opt
 
 For more information, look at: `php artisan renew:subscription -help`
 
+![Alt text](/public/images/renew-subscription-command-help.png "renew-subscription-command-help")
+
 ### Check all Subscriptions
 
 ### `check:subscriptions`
@@ -50,6 +52,8 @@ For more information, look at: `php artisan renew:subscription -help`
 This command takes just a parameter. `<price:optional, default=250>`, If exists subscriptions which **today** expired , it renews by default price. For change price, add price parameter to command.
 
 For more information, look at: `php artisan check:subscriptions -help`
+
+![Alt text](/public/images/check-subscriptions-command-help.PNG "check-subscriptions-command-help")
 
 ## Available Jobs
 
@@ -62,6 +66,8 @@ It pays users whose subscriptions will **expire today** by the **default price**
 Please run: `php artisan schedule:run`
 
 For show schedule next run time, look at: `php artisan schedule:list`
+
+![Alt text](/public/images/check-subscription-schedule.png "check-subscription-schedule-list")
 
 ## Available Tests
 
